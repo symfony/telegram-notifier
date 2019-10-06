@@ -38,10 +38,10 @@ final class TelegramTransport extends AbstractTransport
     private $token;
     private $chatChannel;
 
-    public function __construct(string $token, string $chatChannel = null, HttpClientInterface $client = null, EventDispatcherInterface $dispatcher = null)
+    public function __construct(string $token, string $channel = null, HttpClientInterface $client = null, EventDispatcherInterface $dispatcher = null)
     {
         $this->token = $token;
-        $this->chatChannel = $chatChannel;
+        $this->chatChannel = $channel;
         $this->client = $client;
 
         parent::__construct($client, $dispatcher);
