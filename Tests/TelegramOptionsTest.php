@@ -11,14 +11,13 @@
 
 namespace Symfony\Component\Notifier\Bridge\Telegram\Tests;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Notifier\Bridge\Telegram\TelegramOptions;
 
 final class TelegramOptionsTest extends TestCase
 {
-    /**
-     * @dataProvider validCacheTimeDataProvider
-     */
+    #[DataProvider('validCacheTimeDataProvider')]
     public function testAnswerCallbackQueryWithCacheTime(int $cacheTime)
     {
         $options = new TelegramOptions();
@@ -43,9 +42,7 @@ final class TelegramOptionsTest extends TestCase
         yield 'cache time equals 10' => [10];
     }
 
-    /**
-     * @dataProvider invalidCacheTimeDataProvider
-     */
+    #[DataProvider('invalidCacheTimeDataProvider')]
     public function testAnswerCallbackQuery(int $cacheTime)
     {
         $options = new TelegramOptions();
