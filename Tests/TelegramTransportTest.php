@@ -980,14 +980,14 @@ final class TelegramTransportTest extends TransportTestCase
     public function testSendContactWithOptions()
     {
         $vCard = <<<V_CARD
-BEGIN:VCARD
-VERSION:3.0
-N:Doe;John;;;
-FN:John Doe
-EMAIL;type=INTERNET;type=WORK;type=pref:johnDoe@example.org
-TEL;type=WORK;type=pref:+330186657200
-END:VCARD
-V_CARD;
+            BEGIN:VCARD
+            VERSION:3.0
+            N:Doe;John;;;
+            FN:John Doe
+            EMAIL;type=INTERNET;type=WORK;type=pref:johnDoe@example.org
+            TEL;type=WORK;type=pref:+330186657200
+            END:VCARD
+            V_CARD;
 
         $response = new JsonMockResponse([
             'ok' => true,
