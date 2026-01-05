@@ -15,6 +15,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\JsonMockResponse;
+use Symfony\Component\HttpClient\Response\MockResponse;
 use Symfony\Component\Notifier\Bridge\Telegram\TelegramOptions;
 use Symfony\Component\Notifier\Bridge\Telegram\TelegramTransport;
 use Symfony\Component\Notifier\Exception\MultipleExclusiveOptionsUsedException;
@@ -57,15 +58,7 @@ final class TelegramTransportTest extends TransportTestCase
         $this->expectException(TransportException::class);
         $this->expectExceptionMessageMatches('/post.+testDescription.+400/');
 
-        $response = $this->createMock(ResponseInterface::class);
-        $response->expects($this->exactly(2))
-            ->method('getStatusCode')
-            ->willReturn(400);
-        $response->expects($this->once())
-            ->method('getContent')
-            ->willReturn(json_encode(['description' => 'testDescription', 'error_code' => 400]));
-
-        $client = new MockHttpClient(static fn (): ResponseInterface => $response);
+        $client = new MockHttpClient(new MockResponse(json_encode(['description' => 'testDescription', 'error_code' => 400]), ['http_code' => 400]));
 
         $transport = self::createTransport($client, 'testChannel');
 
@@ -77,15 +70,7 @@ final class TelegramTransportTest extends TransportTestCase
         $this->expectException(TransportException::class);
         $this->expectExceptionMessageMatches('/edit.+testDescription.+404/');
 
-        $response = $this->createMock(ResponseInterface::class);
-        $response->expects($this->exactly(2))
-            ->method('getStatusCode')
-            ->willReturn(400);
-        $response->expects($this->once())
-            ->method('getContent')
-            ->willReturn(json_encode(['description' => 'testDescription', 'error_code' => 404]));
-
-        $client = new MockHttpClient(static fn (): ResponseInterface => $response);
+        $client = new MockHttpClient(new MockResponse(json_encode(['description' => 'testDescription', 'error_code' => 404]), ['http_code' => 400]));
 
         $transport = $this->createTransport($client, 'testChannel');
         $transport->send(new ChatMessage(
