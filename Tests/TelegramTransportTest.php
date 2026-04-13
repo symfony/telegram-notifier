@@ -1066,7 +1066,7 @@ final class TelegramTransportTest extends TransportTestCase
      */
     public function testUsingMultipleExclusiveOptionsWillProvideExceptions(TelegramOptions $messageOptions)
     {
-        $client = new MockHttpClient(function (string $method, string $url, array $options = []): ResponseInterface {
+        $client = new MockHttpClient(static function (string $method, string $url, array $options = []): ResponseInterface {
             self::fail('Telegram API should not be called');
         });
         $transport = self::createTransport($client, 'testChannel');
